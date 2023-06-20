@@ -1,0 +1,57 @@
+variables: 
+   MAVEN_OPTS: -Dmaven.repo.local=.m2/repository
+
+
+stages:
+   - build
+   - Build Docker Image
+   - Login & Push Docker Image
+   - deploy on eks
+cache:
+  paths:
+    - .m2/repository  # cache repo
+    - target
+
+
+build-job:
+   stage: build
+   tags: 
+      - maven  #gitlab- Runner Tag to run project on that specific tag
+   script:
+     - echo "maven compile started"
+     - "mvn compile"
+
+dockerimage-job:
+   stage: Build Docker Image
+   tags: 
+      - maven
+   script:
+     - echo "Building Docker image"
+     - "docker info"
+     #- "docker build -t 468085339621.dkr.ecr.ap-south-1.amazonaws.com/gitlab-image-repo ."
+     - docker build -t farhanregistery/python-application .
+
+dockerlogin and push -job:
+   stage: Login & Push Docker Image
+   tags: 
+      - maven
+   before_script:
+     - echo "login to DockerHub"
+    # - "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 468085339621.dkr.ecr.ap-south-1.amazonaws.com"
+     - docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWD"
+    # - docker login registry.gitlab.com -u 00farhan00 -p $CICD_TOKEN
+   script:
+      - echo "docker push image"
+     # - docker push 468085339621.dkr.ecr.ap-south-1.amazonaws.com/gitlab-image-repo:latest
+      - docker push farhanregistery/python-application
+     # - docker push registery.gitlab.com/00farhan00/maven-web-app
+
+deploy on eks:
+   stage: deploy on eks
+   tags: 
+      - maven #gitlab- Runner Tag to run project on that specific tag
+   script:
+     - echo "deployment on eks cluster started"
+     - "kubectl apply -f manifest.yml"
+     - "kubectl get pods"
+     - "kubectl get svc"
