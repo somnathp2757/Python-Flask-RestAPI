@@ -9,6 +9,22 @@ Prerequsites-
             install docker,configure kubectl,configure aws cli in Gitlab-runner)
 - .gitlab-ci.yml file 
 - Kubernetes manifest file
+
+-----------------------------------------------------------------------------------------------------
+## Import the project from github to gitlab
+
+- Step-1 Enable the import option from GitHub through GitLab console
+
+1.On the top bar, select Main menu > Admin.
+2.On the left sidebar, select Settings > General.
+3.Expand Visibility and access controls.
+4.Scroll to Import sources.
+5.Select the GitLab export checkbox.
+
+- Step-2 create a New Project and choose Import project Option 
+- Step-3 Create a PAT token from GitHub and proved token in gitlab
+- Step-4 Select the req repo to import from GitHub
+- Step-5 Imported
 ------------------------------------------------------------------------------------------------------
 ## Gitlab-Runner setup
 - Step-1 Create a GitLab Runner instance for cicd of project
