@@ -17,7 +17,7 @@ Install the Gitlab runner on EC2 instance
 
 Step-2 Register git-lab runner with git-lab
 
-# gitlab-runner register
+gitlab-runner register
 
 
 Provide the url and token details from Gitlab and choose the requried executor option Shell  to run command 
