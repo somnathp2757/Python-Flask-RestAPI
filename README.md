@@ -10,7 +10,7 @@ Prerequsites-
 - .gitlab-ci.yml file 
 
 ------------------------------------------------------------------------------------------------------
-
+## Gitlab-Runner setup
 - Step-1 Create a GitLab Runner instance for cicd of project
 
 Install the Gitlab runner on EC2 instance 
