@@ -1,7 +1,8 @@
 # python-flask-restapi
 
 
-Requriment-
+Prerequsites-
+- eks cluster
 - Gitlab Account
 - python project
 - Gitlab-Runner
