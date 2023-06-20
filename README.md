@@ -29,59 +29,47 @@ go to settings -> cicd -> Runner -> Add new project runner with respective tags
 - Step-3 Install the Req software in Gitlab runner instance for building the project (pip for python project)
 
 $sudo apt update
+
 $sudo apt install python3-pip
+
 $pip3 --version
 
-- Step-4 Create a .gitlab-ci.yml file for building the java file
-
-
+- Step-4 Create a .gitlab-ci.yml file for building the python file
 
 .gitlab-ci.yml
 
-
-Pipeline Build logs
-
-
+-----------------------------------------------------------------------------------------------------------
+note 
 War file will store on Gitlab-runner instance
 
-
-
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-Building Docker Image-
+Building Docker Image -
 
-Step-1 Install Docker on Gitlab Runner instance
+- Step-1 Install Docker on Gitlab Runner instance
 
 Give the req permission to docker
-sudo chmod 666 /var/run/docker.sock
+$sudo chmod 666 /var/run/docker.sock
 
 ADD the build script in 
 Gitlab-ci.yml file
 
-
-
-
-Pushing Docker Image to dockerhub-
+1.Pushing Docker Image to dockerhub-
 
 First add the docker username and password as an environment variables and pass it in script
 
 
 
-Use in the script
+2. Pushing Docker Image to AWS ECR REPO-
+   
+1st Install AWS CLI on Gitlab-Runner Instance
+2nd Create a ECR Access role and attach the role to Gitlab-runner instance
 
 
 
+4. Pushing Docker Image into GitLab Repository-
 
-Pushing Docker Image to AWS ECR REPO
-1.Install AWS CLI on Gitlab-Runner Instance
-2.Create a ECR Access role and attach the role to Gitlab-runner instance
-Use in the script
-
-
-
-Pushing Docker Image to GitLab Repository
-
-1.Create a PAT token in Gitlab
-2.Make a variable of that token in cicd gitlab and pass it on script
+1st Create a PAT token in Gitlab
+2nd Make a variable of that token in cicd gitlab and pass it on script
 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------
