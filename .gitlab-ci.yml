@@ -1,0 +1,19 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  image: python:3.9
+
+  before_script:
+      # create .ssh dir to store pvt key
+    - mkdir -p ~/.ssh
+    - echo "$EC2_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+  script:
+    - rsync -avz --progress --exclude='.git' --exclude='.gitlab-ci.yml' ./ ubuntu@172.31.13.116:/home/ubuntu/python
+    - ssh ubuntu@172.31.13.116 pip install -r /home/ubuntu/python/requirements.txt
+    - ssh ubuntu@172.31.13.116 'cd /home/ubuntu/python && python3 -m flask run --host=0.0.0.0' 
+   # - scp -o StrictHostKeyChecking=no ubuntu@172.31.13.116:/home/ubuntu/python && pip install -r requirements.txt
+  tags:
+    - cicd-runner
