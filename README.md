@@ -100,5 +100,12 @@ First add the docker username and password as an environment variables and pass 
 - update the script
 
 
-APP deployment doc Link
+POC APP deployment doc
 https://docs.google.com/document/d/1vmT7aOrT0NbBbp4eDskAxg4q_NEOmqpG/edit?usp=sharing&ouid=103192517212555028114&rtpof=true&sd=true
+
+Detailed POC configuration of Gitlab and Gitlab setups
+https://docs.google.com/document/d/1cDscvIwVM7Qke2blecbpUoVze5_DXsVJ/edit?usp=sharing&ouid=103192517212555028114&rtpof=true&sd=true
+
+POC DOC for CICD GitLab
+https://docs.google.com/document/d/1jGDqDN5gEOxCG44p2-V7LiCvYB84ImRv/edit?usp=drive_link&ouid=103192517212555028114&rtpof=true&sd=true
+
