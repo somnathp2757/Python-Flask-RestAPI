@@ -8,7 +8,7 @@ Prerequsites-
 - Gitlab-Runner (
             install docker,configure kubectl,configure aws cli in Gitlab-runner)
 - .gitlab-ci.yml file 
-
+- Kubernetes manifest file
 ------------------------------------------------------------------------------------------------------
 ## Gitlab-Runner setup
 - Step-1 Create a GitLab Runner instance for cicd of project
