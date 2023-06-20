@@ -1,4 +1,4 @@
-## python-flask-restapi
+# python-flask-restapi
 
 
 Prerequsites-
@@ -43,9 +43,9 @@ note
 War file will store on Gitlab-runner instance
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-Building Docker Image -
+### Building Docker Image -
 
-- Step-1 Install Docker on Gitlab Runner instance
+#### Install Docker on Gitlab Runner instance
 
 Give the req permission to docker
 $sudo chmod 666 /var/run/docker.sock
@@ -53,20 +53,20 @@ $sudo chmod 666 /var/run/docker.sock
 ADD the build script in 
 Gitlab-ci.yml file
 
-1.Pushing Docker Image to dockerhub-
+- Pushing Docker Image to dockerhub-
 
 First add the docker username and password as an environment variables and pass it in script
 
 
 
-2. Pushing Docker Image to AWS ECR REPO-
+- Pushing Docker Image to AWS ECR REPO-
    
 1st Install AWS CLI on Gitlab-Runner Instance
 2nd Create a ECR Access role and attach the role to Gitlab-runner instance
 
 
 
-4. Pushing Docker Image into GitLab Repository-
+- Pushing Docker Image into GitLab Repository-
 
 1st Create a PAT token in Gitlab
 2nd Make a variable of that token in cicd gitlab and pass it on script
