@@ -74,9 +74,10 @@ First add the docker username and password as an environment variables and pass 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 
-Integration of EKS with GitLab-
+## Integration of EKS with GitLab-
 
-1.Install Kubectl on gitlab-Runner server on gitlab-runner user
-2.Configure awscli 
-3.Get the kube config file in the gitlab-runner server
-4 update the script
+- Install Kubectl on gitlab-Runner server on gitlab-runner user 
+- Configure awscli ( create a Iam user for gitlab and give the req access to eks and configure the awscli in gitlab-runner)
+- Get the kube config file in the gitlab-runner server
+  $aws eks update-kubeconfig --region region-code --name my-cluster
+- update the script
