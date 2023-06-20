@@ -1,2 +1,9 @@
 # python-flask-restapi
-Example Project on how to develop RESTful API with Flask and Python
+
+
+Requriment-
+- Gitlab Account
+- python project
+- Gitlab-Runner
+            install docker,configure kubectl,configure aws cli in Gitlab-runner
+- .gitlab-ci.yml file 
