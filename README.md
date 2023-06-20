@@ -98,3 +98,7 @@ First add the docker username and password as an environment variables and pass 
 - Get the kube config file in the gitlab-runner server
   $aws eks update-kubeconfig --region region-code --name my-cluster
 - update the script
+
+
+APP deployment doc Link
+https://docs.google.com/document/d/1vmT7aOrT0NbBbp4eDskAxg4q_NEOmqpG/edit?usp=sharing&ouid=103192517212555028114&rtpof=true&sd=true
