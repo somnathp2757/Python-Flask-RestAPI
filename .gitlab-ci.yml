@@ -10,7 +10,7 @@ before_script:
   - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
   - aws configure set region $AWS_DEFAULT_REGION
  # - $(aws ecr get-login --no-include-email --region "${AWS_DEFAULT_REGION}")
- # - IMAGE_TAG="$(echo $CI_COMMIT_SHA | head -c 8)"
+  - IMAGE_TAG="$(echo $CI_COMMIT_SHA | head -c 8)"
 
 stages:
    - build
@@ -38,6 +38,11 @@ dockerimage-job:
    script:
     - echo "Building image..."
     - docker build -t $REPOSITORY_URL:latest .
+    - echo "Tagging image..."
+    - docker tag $REPOSITORY_URL:latest $REPOSITORY_URL:$IMAGE_TAG
+    - echo "Pushing image..."
+    - docker push $REPOSITORY_URL:latest
+    - docker push $REPOSITORY_URL:$IMAGE_TAG
      #- docker build -t farhanregistery/python-application .
 
 dockerlogin and push -job:
@@ -60,11 +65,10 @@ deploy:
   tags: 
       - ecs-runner2
   script:
-    - echo $REPOSITORY_URL
+    - echo $REPOSITORY_URL:$IMAGE_TAG
     - TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition "$TASK_DEFINITION_NAME" --region "${AWS_DEFAULT_REGION}")
-    - NEW_CONTAINER_DEFINTIION=$(echo $TASK_DEFINITION | jq --arg IMAGE "$REPOSITORY_URL:latest" '.taskDefinition.containerDefinitions[0].image = $IMAGE | .taskDefinition.containerDefinitions[0]')
+    - NEW_CONTAINER_DEFINTIION=$(echo $TASK_DEFINITION | jq --arg IMAGE "$REPOSITORY_URL:$IMAGE_TAG" '.taskDefinition.containerDefinitions[0].image = $IMAGE | .taskDefinition.containerDefinitions[0]')
     - echo "Registering new container definition..."
     - aws ecs register-task-definition --region "${AWS_DEFAULT_REGION}" --family "${TASK_DEFINITION_NAME}" --container-definitions "${NEW_CONTAINER_DEFINTIION}"
     - echo "Updating the service..."
     - aws ecs update-service --region "${AWS_DEFAULT_REGION}" --cluster "${CLUSTER_NAME}" --service "${SERVICE_NAME}"  --task-definition "${TASK_DEFINITION_NAME}"
-
