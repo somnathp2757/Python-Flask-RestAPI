@@ -1,7 +1,6 @@
 variables: 
    MAVEN_OPTS: -Dmaven.repo.local=.m2/repository
 
-
 stages:
    - build
    - Build Docker Image
@@ -9,22 +8,22 @@ stages:
    - deploy on eks
 cache:
   paths:
-    - .m2/repository  # cache repo
+    - .m2/repository  # cache-repo
     - target
 
 
 build-job:
    stage: build
    tags: 
-      - maven  #gitlab- Runner Tag to run project on that specific tag
+      - cicd-runner  #gitlab-Runner Tag to run project on that specific tag
    script:
-     - echo "maven compile started"
-     - "mvn compile"
+     - echo "python build started"
+     - "pip install -r requirements.txt"
 
 dockerimage-job:
    stage: Build Docker Image
    tags: 
-      - maven
+      - cicd-runner
    script:
      - echo "Building Docker image"
      - "docker info"
@@ -34,7 +33,7 @@ dockerimage-job:
 dockerlogin and push -job:
    stage: Login & Push Docker Image
    tags: 
-      - maven
+      - cicd-runner
    before_script:
      - echo "login to DockerHub"
     # - "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 468085339621.dkr.ecr.ap-south-1.amazonaws.com"
@@ -49,7 +48,7 @@ dockerlogin and push -job:
 deploy on eks:
    stage: deploy on eks
    tags: 
-      - maven #gitlab- Runner Tag to run project on that specific tag
+      - cicd-runner #gitlab- Runner Tag to run project on that specific tag
    script:
      - echo "deployment on eks cluster started"
      - "kubectl apply -f manifest.yml"
