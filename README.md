@@ -47,3 +47,7 @@ Note: You will need your role to be either Maintainer or Owner
 Go to settings -> CI/CD and then click on variables.
 
 Add these variables AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_DEFAULT_REGION. As a best practice AWS_ACCESS_KEY_ID & AWS_SECRET_ACCESS_KEY should only give programmatic access.
+
+
+----------
+POC https://docs.google.com/document/d/1zQLnovB6ms1Gb4Pos0XmaopAqz2ylj2h/edit?usp=sharing&ouid=103192517212555028114&rtpof=true&sd=true
