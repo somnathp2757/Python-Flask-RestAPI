@@ -31,7 +31,9 @@ ADD the build script in
 Gitlab-ci.yml file
 
 Pushing Docker Image to AWS ECR REPO
+
 1.Install AWS CLI on Gitlab-Runner Instance
+
 2.Create a ECR Access role and attach the role to Gitlab-runner instance
 Use in the script
 
