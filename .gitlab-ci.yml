@@ -1,0 +1,70 @@
+variables: 
+  MAVEN_OPTS: -Dmaven.repo.local=.m2/repository
+  REPOSITORY_URL: 468085339621.dkr.ecr.ap-south-1.amazonaws.com/gitlab-repo1
+  TASK_DEFINITION_NAME: gitlab-td
+  CLUSTER_NAME: ecs-cluster
+  SERVICE_NAME: python-svc
+
+before_script:
+  - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+  - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+  - aws configure set region $AWS_DEFAULT_REGION
+ # - $(aws ecr get-login --no-include-email --region "${AWS_DEFAULT_REGION}")
+ # - IMAGE_TAG="$(echo $CI_COMMIT_SHA | head -c 8)"
+
+stages:
+   - build
+   - Build Docker Image
+   - Login & Push Docker Image
+   - deploy on ECS
+cache:
+  paths:
+    - .m2/repository  # cache- repo
+    - target
+
+
+build-job:
+   stage: build
+   tags: 
+      - ecs-runner2  #gitlab- Runner Tag to run project on that specific ta
+   script:
+     - echo "python build started"
+     - "pip install -r requirements.txt"
+
+dockerimage-job:
+   stage: Build Docker Image
+   tags: 
+      - ecs-runner2
+   script:
+    - echo "Building image..."
+    - docker build -t $REPOSITORY_URL:latest .
+     #- docker build -t farhanregistery/python-application .
+
+dockerlogin and push -job:
+   stage: Login & Push Docker Image
+   tags: 
+      - ecs-runner2
+   before_script:
+     - echo "login to DockerHub"
+     - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 468085339621.dkr.ecr.ap-south-1.amazonaws.com
+    # - docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWD"
+    # - docker login registry.gitlab.com -u 00farhan00 -p $CICD_TOKEN
+   script:
+    - echo "Pushing image..."
+    - docker push $REPOSITORY_URL:latest
+     #- docker push farhanregistery/python-application
+     # - docker push registery.gitlab.com/00farhan00/maven-web-app
+
+deploy:
+  stage: deploy on ECS
+  tags: 
+      - ecs-runner2
+  script:
+    - echo $REPOSITORY_URL
+    - TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition "$TASK_DEFINITION_NAME" --region "${AWS_DEFAULT_REGION}")
+    - NEW_CONTAINER_DEFINTIION=$(echo $TASK_DEFINITION | jq --arg IMAGE "$REPOSITORY_URL:latest" '.taskDefinition.containerDefinitions[0].image = $IMAGE | .taskDefinition.containerDefinitions[0]')
+    - echo "Registering new container definition..."
+    - aws ecs register-task-definition --region "${AWS_DEFAULT_REGION}" --family "${TASK_DEFINITION_NAME}" --container-definitions "${NEW_CONTAINER_DEFINTIION}"
+    - echo "Updating the service..."
+    - aws ecs update-service --region "${AWS_DEFAULT_REGION}" --cluster "${CLUSTER_NAME}" --service "${SERVICE_NAME}"  --task-definition "${TASK_DEFINITION_NAME}"
+
