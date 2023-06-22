@@ -15,7 +15,8 @@
 - ### Step -1 Go to AWS code pipeline create a pipeline
 
 - ### Step -2 Select source provider -
- from where you want to pull the code (code commit, github etc)
+  
+choose the source location where the code is stored. This could be AWS CodeCommit, GitHub, or Amazon S3. For this example, enter AWS CodeCommit, select Repository name and select branch
 
 - ### Step -3 Change detection options- 
 
