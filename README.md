@@ -54,3 +54,5 @@ Note: make sure your ECS cluster is already running and service and  task defina
 
 Note: image definition JSON file is needed for CodeBuild to deploy to ECS. Your buildspec.yaml file used for step 2 should include image definition instructions
 NOte: make sure the name u mention in buildspec.yml is matchs with container name
+
+POC LINK https://docs.google.com/document/d/1_oVY3Rn3kw5S_84Ys3wJR38U_0ZPjMi6/edit?usp=sharing&ouid=103192517212555028114&rtpof=true&sd=true
