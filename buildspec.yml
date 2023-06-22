@@ -8,7 +8,7 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - /root/.pyenv/versions/3.9.16/bin/python3.9 -m pip install --upgrade pip
+      - /root/.pyenv/versions/3.11/bin/python3.11 -m pip install --upgrade pip
       - aws --version
       - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 468085339621.dkr.ecr.ap-south-1.amazonaws.com
       - REPOSITORY_URI=468085339621.dkr.ecr.ap-south-1.amazonaws.com/ecs-python
