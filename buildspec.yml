@@ -42,7 +42,8 @@ phases:
       - echo "Update Kube Config"      
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
       # Apply changes to our Application using kubectl
-      - echo "Apply changes to kube manifests"            
+      - echo "Apply changes to kube manifests"          
+      - kubectl get nodes
       - kubectl apply -f manifest.yml
       - echo "Completed applying changes to Kubernetes Objects"           
       # Additional Commands to view your credentials      
