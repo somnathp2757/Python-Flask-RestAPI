@@ -1,19 +1,20 @@
-CI/CD using AWS code pipeline Deployment on EKS cluster 
-
-Some imp files to configure 
-Buildspec.yml
-Kubernetes deployment file
-Iam policies and role
-Config map
-
-CI/CD Flow - 
+# AWS code pipeline Deployment on EKS cluster 
+### prerequisites-
+- eks cluster configure
+- 
+### Some imp files to configure 
+- Buildspec.yml
+- Kubernetes deployment file
+- Iam policies and role
+- 
+### CI/CD Flow - 
 
 Aws pipeline
 
 Github /code commit ---> code build ---> deploy on kubernetes cluster
-
-Steps-
-1.Create ECR Repository for our Application Docker Images
+-----------------------------------------
+## Steps-
+### 1.Create ECR Repository for our Application Docker Images
 
 Go to Services -> Elastic Container Registry -> Create Repository
 Name: eks-devops-nginx
@@ -22,7 +23,7 @@ Scan On Push: Enable
 Click on Create Repository
 Make a note of Repository name
 
-2.Create CodeCommit Repository
+### 2.Create CodeCommit Repository
 (or can use Github)
 
 Create STS Assume IAM Role for CodeBuild to interact with AWS EKS
@@ -33,43 +34,43 @@ In this step, we are going to create an IAM role and add an inline policy EKS:De
 
 Use awscli to create policy -
 
-# Set Trust Policy 
+### Set Trust Policy 
 
 TRUST="{ \"Version\": \"2012-10-17\", \"Statement\": [ { \"Effect\": \"Allow\", \"Principal\": { \"AWS\": \"arn:aws:iam::${ACCOUNT_ID}:root\" }, \"Action\": \"sts:AssumeRole\" } ] }"
 
-# Verify inside Trust policy, your account id got replacd 
+### Verify inside Trust policy, your account id got replacd 
 
 echo $TRUST
 
-# Create IAM Role for CodeBuild to Interact with EKS 
+### Create IAM Role for CodeBuild to Interact with EKS 
 
 aws iam create-role --role-name EksCodeBuildKubectlRole --assume-role-policy-document "$TRUST" --output text --query 'Role.Arn'
 
 
- # Define Inline Policy with eks Describe permission in a file
+ ### Define Inline Policy with eks Describe permission in a file
 iam-eks-describe-policy echo '{ "Version": "2012-10-17", "Statement": [ { "Effect": "Allow", "Action": "eks:Describe*", "Resource": "*" } ] }' > /tmp/iam-eks-describe-policy 
 
 Cat /tmp/iam-eks-describe-policy
 
 
 
-# Associate Inline Policy to our newly created IAM Role 
+### Associate Inline Policy to our newly created IAM Role 
 
 aws iam put-role-policy --role-name EksCodeBuildKubectlRole --policy-name eks-describe --policy-document file:///tmp/iam-eks-describe-policy
 
-# Verify the same on Management Console
+### Verify the same on Management Console
 arn:aws:iam::468085339621:role/EksCodeBuildKubectlRole
 
 Update EKS Cluster aws-auth ConfigMap with new role created in previous step
-# Verify what is present in aws-auth configmap before change 
+### Verify what is present in aws-auth configmap before change 
 
 kubectl get configmap aws-auth -o yaml -n kube-system
 
-# Set ROLE value 
+### Set ROLE value 
 
 ROLE=" - rolearn: arn:aws:iam::468085339621:role/EksCodeBuildKubectlRole\n username: build\n groups:\n - system:masters" 
 
-# Get current aws-auth configMap data and attach new role info to it // or// edit manually 
+### Get current aws-auth configMap data and attach new role info to it // or// edit manually 
 
 kubectl get -n kube-system configmap/aws-auth -o yaml | awk "/mapRoles: \|/{print;print \"$ROLE\";next}1" > /tmp/aws-auth-patch.yml
 
@@ -77,11 +78,11 @@ kubectl get -n kube-system configmap/aws-auth -o yaml | awk "/mapRoles: \|/{prin
 
 kubectl edit configmap aws-auth -o yaml -n kube-system
 
-# Patch the aws-auth configmap with new role 
+### Patch the aws-auth configmap with new role 
 
 kubectl patch configmap/aws-auth -n kube-system --patch "$(cat /tmp/aws-auth-patch.yml)"
 
-# Verify what is updated in aws-auth configmap after change 
+### Verify what is updated in aws-auth configmap after change 
 
 kubectl get configmap aws-auth -o yaml -n kube-system
 
@@ -109,7 +110,7 @@ Add ARN
 Specify ARN for Role: arn:aws:iam::180789647333:role/EksCodeBuildKubectlRole
 Click Add
 
-# For Role ARN, replace your account id here, refer step-07 environment variable EKS_KUBECTL_ROLE_ARN for more details
+### For Role ARN, replace your account id here, refer step-07 environment variable EKS_KUBECTL_ROLE_ARN for more details
 arn:aws:iam::<your-account-id>:role/EksCodeBuildKubectlRole
 
 Click on Review Policy
@@ -122,11 +123,13 @@ Click on Create Policy
 
 
 
-6.Set Environment Variables for Code Build
+### Set Environment Variables for Code Build
 
 REPOSITORY_URI = 180789647333.dkr.ecr.us-east-1.amazonaws.com/eks-devops
 
 EKS_KUBECTL_ROLE_ARN = arn:aws:iam::180789647333:role/EksCodeBuildKubectlRole
 
 EKS_CLUSTER_NAME = eksdemo1
+
+-----------------------------------------------------------------------
 
