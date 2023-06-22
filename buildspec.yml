@@ -8,11 +8,11 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - /root/.pyenv/versions/3.9.16/bin/python3.9 -m pip install --upgrade pip
+     # - /root/.pyenv/versions/3.9.16/bin/python3.9 -m pip install --upgrade pip
       # Verify AWS CLI Version   
       - aws --version
       - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 468085339621.dkr.ecr.ap-south-1.amazonaws.com
-      - REPOSITORY_URI=468085339621.dkr.ecr.ap-south-1.amazonaws.com/eks-registery
+      - REPOSITORY_URI=468085339621.dkr.ecr.ap-south-1.amazonaws.com/python-app
       - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       # Update Image tag in our Kubernetes Deployment Manifest        
       - echo "Update Image tag in kube-manifest..."
