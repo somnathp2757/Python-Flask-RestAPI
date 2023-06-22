@@ -4,7 +4,7 @@ phases:
   
   pre_build:
     commands:
-      - echo Logging in to Amazon ECR...
+      - echo Logging in to Amazon ECR....
      # - /root/.pyenv/versions/3.9.16/bin/python3.9 -m pip install --upgrade pip
       # Verify AWS CLI Version   
       - aws --version
