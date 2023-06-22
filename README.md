@@ -14,7 +14,7 @@
 
 - ### Step -1 Go to AWS code pipeline create a pipeline
 
-- ### Step -2 Select ource provider -
+- ### Step -2 Select source provider -
  from where you want to pull the code (code commit, github etc)
 
 - ### Step -3 Change detection options- 
