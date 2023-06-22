@@ -1,11 +1,14 @@
-FROM python:3.7
+FROM python:3.6
 
-WORKDIR /opt/app
+RUN python3 --version
+RUN pip3 --version
 
-COPY . .
+WORKDIR /app
+COPY ./app /app
 
-RUN pip install --no-cache-dir -r requirements-prod.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
+RUN apt-get install openssl
 
 EXPOSE 5000
 
-CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
