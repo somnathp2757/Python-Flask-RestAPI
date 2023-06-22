@@ -99,7 +99,7 @@ Update Code Build Role to have access
 2.S3 bucket access
 3.Sts access
 
-Create STS Assume Role Policy
+### Create STS Assume Role Policy
 
 Go to Services IAM -> Policies -> Create Policy
 In Visual Editor Tab
@@ -119,10 +119,9 @@ Description: CodeBuild to interact with EKS cluster to perform changes
 Click on Create Policy
 
 
-
-
-
-
+----------------------------------------------------------------------------------------------------
+### Create a role and role binding for user “build” in your kubernetes cluster
+------------------------------------------------------------------------------------
 ### Set Environment Variables for Code Build
 
 REPOSITORY_URI = 180789647333.dkr.ecr.us-east-1.amazonaws.com/eks-devops
