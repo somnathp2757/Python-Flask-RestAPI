@@ -49,3 +49,8 @@ Logs (cloudwatch)
 - ### Step-7 
 Code Deploy on amazon ECS
 Note: make sure your ECS cluster is already running and service and  task defination is already created 
+
+### Add a deployment. Choose AWS ECS. This is the infrastructure where your code will be deployed.
+
+Note: image definition JSON file is needed for CodeBuild to deploy to ECS. Your buildspec.yaml file used for step 2 should include image definition instructions
+NOte: make sure the name u mention in buildspec.yml is matchs with container name
