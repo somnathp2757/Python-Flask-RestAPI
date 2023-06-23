@@ -13,6 +13,5 @@ phases:
       - echo Build completed
 artifacts:
   files:
-    - scripts/*.sh
     - appspec.yml
   discard-paths: yes
