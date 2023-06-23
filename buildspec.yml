@@ -7,10 +7,10 @@ phases:
       
   build:
     commands:
-      - pip install -r requirements.txt
+      - rsync -avz --progress --exclude='.git' --exclude='.gitlab-ci.yml' ./ /home/ubuntu/python
   post_build:
     commands:
-      - echo Build completed
+      - echo code deployment on ec2 completed
 artifacts:
   files:
     - appspec.yml
