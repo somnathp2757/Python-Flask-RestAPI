@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd /home/ubuntu/
-python3 -m flask run --host=0.0.0.0
+nohup python3 -m flask run --host=0.0.0.0 &
