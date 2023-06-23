@@ -4,27 +4,15 @@ phases:
   install:
     runtime-versions:
       python: 3.9
-             
-  pre_build:
-    commands:
-      - echo Logging in to Amazon ECR...
-      - /root/.pyenv/versions/3.9.16/bin/python3.9 -m pip install --upgrade pip
-      - aws --version
-      - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 496746411336.dkr.ecr.eu-north-1.amazonaws.com
-      - REPOSITORY_URI=496746411336.dkr.ecr.eu-north-1.amazonaws.com/py-app
-      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      
   build:
     commands:
       - pip install -r requirements.txt
-      - echo Build started on `date`
-      - echo Building the Docker image...
-      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
   post_build:
     commands:
-      - echo Build completed on `date`
-      - echo Pushing the Docker images...
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - echo Writing image definitions file...
-      - printf '[{"name":"py-app","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - echo Build completed
 artifacts:
-    files: imagedefinitions.json
+  files:
+    - scripts/*.sh
+    - appspec.yml
+  discard-paths: yes
