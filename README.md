@@ -50,3 +50,5 @@ And make sure the agent is running
 ### Setup code pipeline to deploy
 - Now the final step. create a pipeline from the CodePipeline dashboard
 NOTE - we skip the build stage as we are using python app we directly create a deployment
+
+POC https://docs.google.com/document/d/1_Hv20RJdo00d3mQrSQGifdtof6Euzvms/edit?usp=sharing&ouid=103192517212555028114&rtpof=true&sd=true
