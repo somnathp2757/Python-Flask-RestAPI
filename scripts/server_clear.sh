@@ -1,2 +1,2 @@
-#!/usr/bin/env bash
-sudo rm -rf /home/ubuntu/server
+#!/usr/bin/bash
+sudo apt install python3-pip
