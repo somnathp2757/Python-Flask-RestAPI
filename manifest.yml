@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pythonappdeployment
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: pythonwebapp
+  template:
+    metadata:
+      name: pythonwebapppod
+      labels:
+        app: pythonwebapp
+    spec:
+      containers:
+        - name: pythonwebappcontainer
+          image: 468085339621.dkr.ecr.ap-south-1.amazonaws.com/python-app:latest #CONTAINER_IMAGE
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pythonwebappsvc
+spec:
+  selector:
+    app: pythonwebapp
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 5000
