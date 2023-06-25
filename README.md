@@ -3,6 +3,8 @@
 ### Prerequisites-
 - dockerfile 
 - ECS cluster
+- Task Defination
+- Service
 - Jenkins server with AWS CLI configure , docker
 - Jenkins user (programmatic access)
 - EKS repo
