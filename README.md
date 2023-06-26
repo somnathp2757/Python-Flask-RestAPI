@@ -21,7 +21,8 @@
 - Add pub IP address of ec2 as an variable in gitlab (EC2_IP)
 - Add username as an variable in gitlab (ubuntu)
 - Add private key as a variable in gitlab copy the content of pem file (EC2_pvt_key)
-  -----------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
 
   POC CICD https://docs.google.com/document/d/18QxZdnSdbGB7UqBUcmuOThWKF_W18p18/edit?usp=sharing&ouid=103192517212555028114&rtpof=true&sd=true
+  
   POC Gitlab COnfiguration https://docs.google.com/document/d/1cDscvIwVM7Qke2blecbpUoVze5_DXsVJ/edit?usp=drive_link&ouid=103192517212555028114&rtpof=true&sd=true
