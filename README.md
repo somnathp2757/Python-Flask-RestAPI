@@ -2,7 +2,7 @@
 
 ### Prerequisites-
 - EC2 Instance 
-- Jenkins server ( install public over ssh plugin)
+- Jenkins server ( install SSH AGENT plugin)
 - Python code
 - jenkinsfile
 
