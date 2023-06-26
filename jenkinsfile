@@ -1,0 +1,16 @@
+node{
+     
+    
+    stage('SCM Checkout GitHub'){
+        git branch: 'jenkins-ecs-python', credentialsId: 'github', url: 'https://github.com/00farhan00/Python-Flask-RestAPI.git'
+    }
+
+    stage('deploy/ update on ec2'){
+          sshagent(['dc292b7a-3b39-4630-9fc3-1b806b54412c']) {
+               sh "scp -o StrictHostKeyChecking=no .flaskenv app_service.py app.py requirements.txt ubuntu@172.31.13.116:/home/ubuntu/python"
+           //    sh " rsync -avz --progress --exclude='.git' --exclude='.gitlab-ci.yml' ./ ubuntu@172.31.13.116:/home/ubuntu/python"
+               sh " ssh ubuntu@172.31.13.116 pip install -r /home/ubuntu/python/requirements.txt "
+               sh " ssh ubuntu@172.31.13.116 'cd /home/ubuntu/python && python3 -m flask run --host=0.0.0.0' "
+   }
+   }    
+}
