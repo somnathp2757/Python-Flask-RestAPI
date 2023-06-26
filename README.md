@@ -132,3 +132,4 @@ EKS_CLUSTER_NAME = eksdemo1
 
 -----------------------------------------------------------------------
 
+POC https://docs.google.com/document/d/1Oc5ZNmkhMHSGmi0EZOcz1ECE-guZ8yDL/edit?usp=drive_link&ouid=103192517212555028114&rtpof=true&sd=true
