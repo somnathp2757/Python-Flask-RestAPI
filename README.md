@@ -20,3 +20,5 @@
 ----------------------------------------------------------------------------------------------------------
 
 - In the Jenkins script you can use “rsync” or “scp” command to copy the python code to remote ec2 server
+
+POC https://docs.google.com/document/d/14M2iJzJMBB3ur_TkdUnShKCgOeUiNVp5/edit?usp=sharing&ouid=103192517212555028114&rtpof=true&sd=true
